@@ -46,6 +46,12 @@ function knightMoves(a, b) {
         };
         return true;
     };
+    const includes = (arr1, arr2) => {
+        for (let item of arr1) {
+            if (areEqual(item,arr2)) return true;
+        };
+        return false;
+    };
     const getEdges = (node) => {
         let edges = [];
         for (let i=0; i<list.length; i++) {
@@ -57,9 +63,10 @@ function knightMoves(a, b) {
         };
         return edges;
     };
+
     return paths;
 };
 
 let a = [0, 0];
-let b = [7, 3];
+let b = [3, 3];
 console.log(knightMoves(a, b));
