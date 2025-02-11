@@ -52,6 +52,12 @@ function knightMoves(a, b) {
         };
         return false;
     };
+    const firstElement = (arr) => {
+        return arr[0]
+    };
+    const lastElement = (arr) => {
+        return arr[arr.length-1]
+    };
     const getEdges = (node) => {
         let edges = [];
         for (let i=0; i<list.length; i++) {
@@ -64,6 +70,12 @@ function knightMoves(a, b) {
         return edges;
     };
 
+
+
+
+
+
+    console.log('RETURN:');
     return paths;
 };
 
