@@ -1,7 +1,7 @@
 function knightMoves(a, b) {
     if (a[0] < 0 || a[0] > 7 || b[0] < 0 || b[0] > 7 ||
-        a[1] < 0 || a[1] > 7 || b[1] < 0 || b[1] > 7) return 'Invalid input!';
-    let paths = [];    
+        a[1] < 0 || a[1] > 7 || b[1] < 0 || b[1] > 7) return 'Invalid input!';    
+    let final = [];
     const adjList = () => {
         let list = [];
         for (let i=0; i<8; i++) {
@@ -39,7 +39,6 @@ function knightMoves(a, b) {
         return list;
     };
     let list = adjList();
-    //////////////////////////////////////////////////////////////////////////
     const areEqual = (arr1, arr2) => {
         for (let i=0; i<arr1.length; i++) {
             if (arr1.length !== arr2.length || arr1[i] !== arr2[i]) return false;
@@ -52,12 +51,6 @@ function knightMoves(a, b) {
         };
         return false;
     };
-    const firstElement = (arr) => {
-        return arr[0]
-    };
-    const lastElement = (arr) => {
-        return arr[arr.length-1]
-    };
     const getEdges = (node) => {
         let edges = [];
         for (let i=0; i<list.length; i++) {
@@ -69,16 +62,33 @@ function knightMoves(a, b) {
         };
         return edges;
     };
-
-
-
-
-
-
-    console.log('RETURN:');
-    return paths;
+    const BFS = (a, b) => {        
+        let que = [];
+        que.push(a);
+        let result = [];        
+        while (que.length) {
+            let node = que.shift();
+            result.push(node);
+            let edges = getEdges(node);
+            for (let item of edges) {                        
+                if (areEqual(item, b)) {
+                    final.push(item);
+                    while (result.length > 1) {
+                        let temp = result.pop();
+                        while (!includes(getEdges(result[result.length-1]),temp)) result.pop();
+                        final.unshift(temp);
+                    };
+                    return
+                };
+                que.push(item);
+            };              
+        };
+    };
+    BFS(a, b);
+    final.unshift(a);
+    console.log(`You made it in ${final.length-1} moves!  Here's your path:`);
+    return final;    
 };
-
 let a = [0, 0];
-let b = [3, 3];
+let b = [0, 7];
 console.log(knightMoves(a, b));
